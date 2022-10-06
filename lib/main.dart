@@ -15,15 +15,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      title: 'My Flutter App',
+      //setting up default theme
+      theme: ThemeData.light(),
       home: const HomePage(),
-      initialRoute: MyRoutes.homePageRoute,
+      //initialRoute: MyRoutes.homePageRoute,
       routes: {
         MyRoutes.homePageRoute: (context) => const HomePage(),
-        MyRoutes.loginRoute: (context) => const LoginScreen(),
+        MyRoutes.loginRoute: (context) =>  LoginScreen(),
         MyRoutes.settingsPageRoute: (context) => const SettingsScreen()
       },
     );
