@@ -1,37 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/provider/bottom_nav_index_provider.dart';
 import 'package:my_flutter_app/screens/login-screen.dart';
 import 'package:my_flutter_app/screens/settings-screen.dart';
 import 'package:my_flutter_app/widgets/animal_list_widget.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  int selectedIndex = 0;
-
-  @override
   Widget build(BuildContext context) {
-    final tabs = [const AnimalListWidget(), LoginScreen(), const SettingsScreen()];
+    //bottom nav bar tabs
+    final tabs = [
+      const AnimalListWidget(),
+      LoginScreen(),
+      const SettingsScreen()
+    ];
+    //titles for selected bottom nav bar
     final List<String> titleList = ["Homepage", "Login", "Settings"];
 
+    //bottom nav bar index provider
+    final navigationIndexProvider =
+        Provider.of<BottomNavigationIndexProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title:  Text(titleList[selectedIndex].toString()),
+        title: Text(titleList[navigationIndexProvider.currentIndex].toString()),
       ),
-      body: tabs[selectedIndex],
+      body: tabs[navigationIndexProvider.currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-          currentIndex: selectedIndex,
-          //onTap will switch between bottom navigation items
-          onTap: (index) => setState(() {
-                selectedIndex = index;
-              }),
+          currentIndex: navigationIndexProvider.currentIndex,
+          elevation: 0,
+          onTap: (index) {
+            navigationIndexProvider.updateScreenIndex(index);
+          },
           items: const [
             BottomNavigationBarItem(
               label: "Home",

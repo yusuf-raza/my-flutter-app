@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/provider/animal_provider.dart';
+import 'package:my_flutter_app/provider/bottom_nav_index_provider.dart';
 import 'package:my_flutter_app/provider/theme_provider.dart';
 import 'package:my_flutter_app/screens/homepage-screen.dart';
 import 'package:my_flutter_app/screens/login-screen.dart';
@@ -16,29 +18,32 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-
-
-    return ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
-      child: Builder(
-          builder: (context) {
-            final themeProvider = Provider.of<ThemeProvider>(context);
+    //a multi-provider
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AnimalProvider()),
+        ChangeNotifierProvider(create: (_) => BottomNavigationIndexProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
+      child: ChangeNotifierProvider(
+        create: (_) => ThemeProvider(),
+        child: Builder(builder: (context) {
+          final themeProvider = Provider.of<ThemeProvider>(context);
           return MaterialApp(
             title: 'My Flutter App',
             //setting up default theme
-            themeMode:themeProvider.themeMode,
+            themeMode: themeProvider.themeMode,
             darkTheme: ThemeData(brightness: Brightness.dark),
             //theme: ThemeData.light(),
             home: const HomePage(),
             //initialRoute: MyRoutes.homePageRoute,
             routes: {
               MyRoutes.homePageRoute: (context) => const HomePage(),
-              MyRoutes.loginRoute: (context) =>  LoginScreen(),
+              MyRoutes.loginRoute: (context) => LoginScreen(),
               MyRoutes.settingsPageRoute: (context) => const SettingsScreen()
             },
           );
-        }
+        }),
       ),
     );
   }

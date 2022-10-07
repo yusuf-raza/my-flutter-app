@@ -9,26 +9,28 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      //: AppBar(title: Text("Settings"),),
       body: Center(
-        child: Container(
-            child: Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.sunny,
               size: 100,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Switch(
                 value: themeProvider.isLightMode,
                 onChanged: (value) {
                   themeProvider.toggleTheme(value);
-                })
+                }),
+            const Text(
+              "Toggle theme",
+              style: TextStyle(fontSize: 25),
+            )
           ],
-        )),
+        ),
       ),
     );
   }
