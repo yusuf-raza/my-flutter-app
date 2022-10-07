@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/screens/login-screen.dart';
 import 'package:my_flutter_app/screens/settings-screen.dart';
+import 'package:my_flutter_app/widgets/animal_list_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,12 +16,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [  Container(),  LoginScreen(), const SettingsScreen()];
+    final tabs = [const AnimalListWidget(), LoginScreen(), const SettingsScreen()];
+    final List<String> titleList = ["Homepage", "Login", "Settings"];
+
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Flutter App"),
+        elevation: 0,
+        title:  Text(titleList[selectedIndex].toString()),
       ),
-      body: tabs[selectedIndex] ,
+      body: tabs[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           //onTap will switch between bottom navigation items
